@@ -1,34 +1,30 @@
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk import pos_tag
 import streamlit as st
 
-# Basic categorization logic based on word endings and patterns
-def categorize_word(word):
-    if word.endswith("ing") or word.endswith("ed"):  # Example: walking, played
-        return "Verb"
-    elif word.endswith("ly"):  # Example: quickly, slowly
-        return "Adverb"
-    elif word.endswith("ous") or word.endswith("ful") or word.endswith("ive"):  # Example: cautious, beautiful
-        return "Adjective"
-    elif word.isalpha() and word[0].isupper():  # Example: Proper nouns like John
-        return "Proper Noun"
-    elif word.isalpha():  # Default for simple words
-        return "Noun"
-    else:  # Fallback for unrecognized words
-        return "Unknown"
+# Dynamically download required NLTK data
+nltk.download('punkt', quiet=True)  # Tokenizer
+nltk.download('averaged_perceptron_tagger', quiet=True)  # POS Tagger
 
-# Streamlit app
+# Function to determine the category of a word
+def get_word_category(word):
+    tokens = word_tokenize(word)  # Tokenize the word
+    tagged = pos_tag(tokens)  # POS tagging
+    # Extract the POS tag for the first token (if exists)
+    if tagged:
+        _, tag = tagged[0]
+        return tag
+    return "Unknown"
+
+# Streamlit App
 st.title("Dynamic Word Categorizer")
-st.write("Enter a word, and I'll try to identify its category dynamically!")
+st.write("Enter a word to categorize it (e.g., noun, verb, adjective).")
 
-# User input
 word_input = st.text_input("Enter a word:")
 
-# Process the input and categorize
 if word_input:
-    category = categorize_word(word_input.strip())
+    category = get_word_category(word_input)
     st.write(f"The word '{word_input}' is categorized as: {category}")
-    
-        
-    
-        
         
     
