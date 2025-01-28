@@ -17,26 +17,26 @@ word_input = st.text_input("Enter a word:")
 def get_word_category(word):
     # Custom tokenization by splitting the input string into words
     tokens = word.split()  # Simple space-based tokenization
-    tagged = pos_tag(tokens)  # POS tagging
+    tagged_words = pos_tag(tokens)  # POS tagging
 
-    if tagged:
-        pos_tag = tagged[0][1]  # Get POS tag for the first token
+    if tagged_words:
+        word_tag = tagged_words[0][1]  # Get POS tag for the first token
         # Return the category based on POS tag
-        if pos_tag.startswith("NN"):
+        if word_tag.startswith("NN"):
             return "Noun"
-        elif pos_tag.startswith("VB"):
+        elif word_tag.startswith("VB"):
             return "Verb"
-        elif pos_tag.startswith("JJ"):
+        elif word_tag.startswith("JJ"):
             return "Adjective"
-        elif pos_tag.startswith("RB"):
+        elif word_tag.startswith("RB"):
             return "Adverb"
-        elif pos_tag.startswith("PRP"):
+        elif word_tag.startswith("PRP"):
             return "Pronoun"
-        elif pos_tag.startswith("IN"):
+        elif word_tag.startswith("IN"):
             return "Preposition"
-        elif pos_tag.startswith("CC"):
+        elif word_tag.startswith("CC"):
             return "Conjunction"
-        elif pos_tag.startswith("UH"):
+        elif word_tag.startswith("UH"):
             return "Interjection"
         else:
             return "Unknown"
@@ -47,6 +47,8 @@ if word_input:
     st.write(f"The word '{word_input}' is categorized as: {category}")
 
 
+        
+    
         
         
     
