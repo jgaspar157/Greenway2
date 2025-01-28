@@ -1,5 +1,5 @@
 streamlit
-nltk
+nltk==3.6.7
 spacy
 pandas
 matplotlib
