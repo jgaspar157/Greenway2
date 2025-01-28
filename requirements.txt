@@ -1,4 +1,5 @@
 streamlit
-spacy
-spacy-lookups-data
 nltk
+spacy
+pandas
+matplotlib
