@@ -1,6 +1,5 @@
 import streamlit as st
 import nltk
-from nltk.tokenize import word_tokenize
 from nltk import pos_tag
 import os
 
@@ -19,8 +18,8 @@ st.title("Word Category Identifier using NLTK")
 word_input = st.text_input("Enter a word:")
 
 def get_word_category(word):
-    # Tokenize and POS tagging
-    tokens = word_tokenize(word)
+    # Simple word tokenization by splitting spaces (fallback method)
+    tokens = word.split()  
     tagged = pos_tag(tokens)  # POS tagging
 
     if tagged:
@@ -49,5 +48,6 @@ def get_word_category(word):
 if word_input:
     category = get_word_category(word_input)
     st.write(f"The word '{word_input}' is categorized as: {category}")
+        
         
     
