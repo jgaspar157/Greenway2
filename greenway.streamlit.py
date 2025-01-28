@@ -2,12 +2,6 @@ import streamlit as st
 import nltk
 from nltk import pos_tag
 
-# Download necessary resources only if not already present
-if not nltk.data.find('tokenizers/punkt'):
-    nltk.download('punkt', quiet=True)  # Tokenizer
-if not nltk.data.find('taggers/averaged_perceptron_tagger'):
-    nltk.download('averaged_perceptron_tagger', quiet=True)  # POS tagger
-
 # Streamlit interface
 st.title("Word Category Identifier using NLTK")
 
@@ -15,8 +9,8 @@ st.title("Word Category Identifier using NLTK")
 word_input = st.text_input("Enter a word:")
 
 def get_word_category(word):
-    # Custom tokenization by splitting the input string into words
-    tokens = word.split()  # Simple space-based tokenization
+    # Simple space-based tokenization: split the input string into words
+    tokens = word.split()  # This works without needing any external resources
     tagged_words = pos_tag(tokens)  # POS tagging
 
     if tagged_words:
@@ -45,8 +39,7 @@ def get_word_category(word):
 if word_input:
     category = get_word_category(word_input)
     st.write(f"The word '{word_input}' is categorized as: {category}")
-
-
+    
         
     
         
