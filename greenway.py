@@ -1,15 +1,21 @@
-import streamlit as st
 import spacy
+import streamlit as st
+import os
+import subprocess
+import sys
 
-# Load the English language model from spaCy
+# Ensure the model is installed, if not, download it
+if not os.path.exists("/usr/local/lib/python3.7/dist-packages/en_core_web_sm"):
+    subprocess.check_call([sys.executable, "-m", "spacy", "download", "en_core_web_sm"])
+
+# Load the model
 nlp = spacy.load("en_core_web_sm")
 
-# Define the categories to classify the words
-categories = [
-    "Noun", "Verb", "Adjective", "Adverb", "Pronoun", "Preposition", "Conjunction", "Interjection",
-    "Proper Noun", "Determiner", "Auxiliary Verb", "Cardinal Number", "Ordinal Number", "Quantifier", 
-    "Particle", "Phrasal Verb", "Possessive Pronoun", "Reflexive Pronoun", "Relative Pronoun"
-]
+# Streamlit interface
+st.title("Word Category Identifier")
+
+# Input field for the word
+word_input = st.text_input("Enter a word:")
 
 # Function to get the category of a word
 def get_word_category(word):
@@ -51,20 +57,7 @@ def get_word_category(word):
             return "Unknown"
     return "Unknown"
 
-# Streamlit app layout
-st.title("Word Category Identifier")
-
-# Input field for the word
-word_input = st.text_input("Enter a word:")
-
-# Button to trigger the categorization
-if st.button("Identify Category"):
-    if word_input:
-        category = get_word_category(word_input)
-        st.write(f"The word '{word_input}' is categorized as: {category}")
-    else:
-        st.write("Please enter a word to identify its category.")
-
-# Display the list of available categories
-st.subheader("Available Categories")
-st.write(categories)
+# When the button is clicked
+if word_input:
+    category = get_word_category(word_input)
+    st.write(f"The word '{word_input}' is categorized as: {category}")
